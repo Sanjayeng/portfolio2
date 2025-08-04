@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SANJAY : AIML Engineer</title>
+    <link rel="stylesheet" href="style.css">
+    <style>/* General Styling */
+:root {
+    --bg-light: #F0F8FF; /* AliceBlue - very light, slightly blue */
+    --text-dark: #2C3E50; /* Dark Slate Grey */
+    --accent-blue: #3498DB; /* Bright Blue */
+    --accent-green: #2ECC71; /* Emerald Green */
+    --accent-yellow: #F1C40F; /* Sunflower Yellow */
+    --accent-orange: #E67E22; /* Carrot Orange */
+    --section-bg: #FFFFFF; /* Pure white for section backgrounds */
+    --shadow-light: rgba(0, 0, 0, 0.08);
+    --border-color: #EAEAEA;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background-color: var(--bg-light);
+    overflow-x: hidden; /* Prevent horizontal scroll from 3D */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+a {
+    color: var(--accent-blue);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--accent-green);
+}
+
+h1, h2, h3 {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--text-dark);
+    margin-bottom: 15px;
+}
+
+h2 {
+    font-size: 2.5em;
+    text-align: center;
+    margin-bottom: 50px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: var(--accent-blue);
+    border-radius: 2px;
+}
+
+.section {
+    padding: 100px 0;
+    position: relative;
+    z-index: 1; /* Ensure content is above any potential background 3D elements */
+    overflow: hidden; /* For containing potential section-specific 3D elements */
+}
+
+.bg-light {
+    background-color: var(--section-bg);
+}
+
+ul {
+    list-style: none;
+}
+
+/* Header */
+header {
+    background-color: var(--section-bg);
+    padding: 15px 0;
+    box-shadow: 0 4px 15px var(--shadow-light);
+    position: fixed; /* Fixed header */
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2000; /* Above everything else */
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 2em;
+    font-weight: 700;
+    color: var(--accent-blue);
+    letter-spacing: 1px;
+}
+
+nav ul {
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 40px;
+}
+
+nav ul li a {
+    font-weight: 600;
+    font-size: 1.1em;
+    color: var(--text-dark);
+    position: relative;
+    padding-bottom: 8px;
+    transition: color 0.3s ease;
+}
+
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--accent-green);
+    transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth animation */
+}
+
+nav ul li a:hover::after,
+nav ul li a.active::after {
+    width: 100%;
+}
+
+/* Hero Section (Home) */
+.hero-section {
+    height: 100vh; /* Full viewport height */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-color: var(--bg-light); /* Background for areas not covered by 3D */
+    padding-top: 80px; /* Offset for fixed header */
+}
+
+#three-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; /* Behind overlay content */
+}
+
+.hero-content-overlay {
+    position: relative; /* Relative to hero-section */
+    z-index: 1; /* Above Three.js canvas */
+    display: flex;
+    flex-direction: column; /* Stack elements vertically on small screens */
+    align-items: center;
+    gap: 40px;
+    text-align: center;
+    padding: 20px;
+    max-width: 900px;
+}
+
+.profile-image-container {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 6px solid var(--section-bg); /* White border around image */
+    box-shadow: 0 10px 30px var(--shadow-light);
+    background-color: #FFF; /* Ensure a white background if image is transparent */
+    flex-shrink: 0; /* Don't shrink on small screens */
+}
+
+.profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.hero-text {
+    color: var(--text-dark);
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.05); /* Subtle text shadow for readability over 3D */
+}
+
+.hero-text h2 {
+    font-size: 4em;
+    margin-bottom: 10px;
+    color: var(--text-dark); /* Keep hero text readable */
+    text-align: center;
+    line-height: 1.1;
+}
+
+.hero-text h2::after {
+    display: none; /* No line under hero H2 */
+}
+
+.hero-text p {
+    font-size: 1.4em;
+    margin-bottom: 40px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-button {
+    background-color: var(--accent-blue);
+    color: #FFFFFF;
+    padding: 15px 35px;
+    border: none;
+    border-radius: 50px; /* More playful, rounded button */
+    font-size: 1.1em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    margin: 0 10px;
+}
+
+.cta-button:hover {
+    background-color: var(--accent-green);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* About Me & Additional Qualifications */
+#about h3 {
+    color: var(--accent-blue);
+    font-size: 1.8em;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#about ul {
+    margin-top: 20px;
+    padding-left: 25px;
+    list-style: disc; /* Keep disc for readability here */
+    color: var(--text-dark);
+}
+#about ul li {
+    margin-bottom: 10px;
+}
+#about ul li strong {
+    color: var(--accent-blue);
+}
+
+
+/* Skills Section */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.skill-category {
+    background-color: var(--section-bg);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px var(--shadow-light);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+
+.skill-category:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.skill-category h3 {
+    font-size: 1.6em;
+    color: var(--accent-blue);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.skill-category h3 i {
+    margin-right: 12px;
+    font-size: 1.5em;
+    color: var(--accent-green); /* Icons with a vibrant color */
+}
+
+.skill-category p {
+    font-size: 1.1em;
+    color: var(--text-dark);
+}
+
+/* Experience Section */
+.experience-item {
+    background-color: var(--section-bg);
+    padding: 30px;
+    margin-bottom: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px var(--shadow-light);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+
+.experience-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.experience-item h3 {
+    color: var(--accent-blue);
+    margin-bottom: 15px;
+    font-size: 1.8em;
+}
+
+.experience-item ul {
+    list-style: disc;
+    padding-left: 25px;
+    color: var(--text-dark);
+}
+
+.experience-item ul li {
+    margin-bottom: 10px;
+    line-height: 1.8;
+}
+
+/* Projects Section */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.project-card {
+    background-color: var(--section-bg);
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px var(--shadow-light);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid var(--border-color);
+}
+
+.project-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.project-card h3 {
+    color: var(--accent-blue);
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+.project-card p {
+    font-size: 1.1em;
+    color: var(--text-dark);
+    margin-bottom: 25px;
+    flex-grow: 1;
+}
+
+.project-card .btn {
+    display: inline-block;
+    background-color: var(--accent-yellow); /* Different accent color for buttons */
+    color: var(--text-dark);
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.project-card .btn:hover {
+    background-color: var(--accent-orange);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Certifications Section */
+.cert-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding-left: 0;
+    margin-top: 40px;
+}
+
+.cert-list li {
+    background-color: var(--section-bg);
+    padding: 20px 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px var(--shadow-light);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    align-items: center;
+    font-size: 1.1em;
+    color: var(--text-dark);
+    border: 1px solid var(--border-color);
+}
+
+.cert-list li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Education Section */
+.education-item {
+    background-color: var(--section-bg);
+    padding: 30px;
+    margin-bottom: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px var(--shadow-light);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+
+.education-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.education-item h3 {
+    color: var(--accent-blue);
+    font-size: 1.8em;
+    margin-bottom: 10px;
+}
+
+.education-item p {
+    margin-bottom: 8px;
+    color: var(--text-dark);
+}
+
+/* Footer */
+footer {
+    background-color: var(--text-dark);
+    color: #ECF0F1; /* Light grey for footer text */
+    text-align: center;
+    padding: 40px 0;
+    font-size: 1em;
+}
+
+.footer-links {
+    margin-top: 20px;
+}
+
+.footer-links a {
+    color: #ECF0F1;
+    margin: 0 15px;
+    font-size: 1.8em;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--accent-yellow); /* Yellow on hover for footer icons */
+    transform: translateY(-3px);
+}
+
+/* Scroll Reveal (Add these if you want the JS scroll reveal effect) */
+.section.hidden {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .hero-text h2 {
+        font-size: 3.2em;
+    }
+}
+
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    nav ul {
+        margin-top: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    nav ul li {
+        margin: 0 15px 10px 15px;
+    }
+
+    .hero-content-overlay {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .hero-text h2 {
+        font-size: 2.5em;
+    }
+
+    .hero-text p {
+        font-size: 1.2em;
+    }
+
+    .cta-button {
+        padding: 12px 25px;
+        font-size: 1em;
+        margin: 0 8px;
+    }
+
+    .skills-grid,
+    .projects-grid,
+    .cert-list {
+        grid-template-columns: 1fr;
+    }
+
+    .section {
+        padding: 60px 0;
+    }
+
+    h2 {
+        font-size: 2em;
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-text h2 {
+        font-size: 2em;
+    }
+
+    .hero-text p {
+        font-size: 1em;
+    }
+
+    .contact-links {
+        flex-direction: column;
+        align-items: center;
+    }
+    .profile-image-container {
+        width: 150px;
+        height: 150px;
+    }
+}
+</style>
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script type="module" src="https://unpkg.com/three@0.165.0/build/three.module.js"></script>
+    <script type="module" src="https://unpkg.com/three@0.165.0/examples/jsm/controls/OrbitControls.js"></script>
+    <script type="module" src="https://unpkg.com/three@0.165.0/examples/jsm/loaders/GLTFLoader.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo">SANJAY B</h1>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#certifications">Certifications</a></li>
+                    <li><a href="#education">Education</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="hero-section">
+            <div id="three-container"></div> <div class="hero-content-overlay">
+                <div class="hero-text">
+                    <h2>SANJAY: AIML Engineer</h2>
+                    <p>Building intelligent systems, cloud solutions, and interactive experiences.</p>
+                    <div class="contact-buttons">
+                        <button class="cta-button" id="exploreWorkBtn">Explore My Work</button>
+                        <button class="cta-button" id="contactMeBtn">Contact Me</button>
+                    </div>
+                </div>
+                <div class="profile-image-container">
+                    <img src="photo.jpg" alt="Sanjay B Profile Picture" class="profile-img">
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="section">
+            <div class="container">
+                <h2>About Me & Skills</h2>
+                <p>I am a B.Tech Computer Science and Engineering (AI & ML) student at Garden City University, expected to graduate in 2026. My academic journey has provided me with a strong foundation in programming languages, web development, database technologies, and IoT. With an average CGPA of 8.6 over 6 semesters, I am adept at critical thinking, time management, and team collaboration. I am actively seeking internships, co-op programs, and entry-level positions where I can apply my skills and contribute to innovative projects.</p>
+                <h3>Technical Skills</h3>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3><i class="fas fa-code"></i> Programming Languages</h3>
+                        <p>C, C++, Python, HTML, CSS, JavaScript, SQL</p>
+                    </div>
+                    <div class="skill-category">
+                        <h3><i class="fas fa-globe"></i> Web Development</h3>
+                        <p>Responsive Design, API Integration, UI/UX Design, Web Animation</p>
+                    </div>
+                    <div class="skill-category">
+                        <h3><i class="fas fa-cogs"></i> Frameworks/Libraries</h3>
+                        <p>React (Basic), jQuery</p>
+                    </div>
+                    <div class="skill-category">
+                        <h3><i class="fas fa-tools"></i> Tools</h3>
+                        <p>Git, GitHub, VS Code, Figma, Canva</p>
+                    </div>
+                    <div class="skill-category">
+                        <h3><i class="fas fa-database"></i> Database Technologies</h3>
+                        <p>MySQL, Firebase (Basic), MongoDB (Basic)</p>
+                    </div>
+                    <div class="skill-category">
+                        <h3><i class="fas fa-microchip"></i> IoT and Hardware</h3>
+                        <p>Arduino, Sensor Integration, Real-Time Monitoring, Signal Conditioning</p>
+                    </div>
+                    <div class="skill-category">
+                        <h3><i class="fas fa-cloud"></i> Platforms/Cloud Tools</h3>
+                        <p>GitHub Pages, Netlify, Vercel, Google Colab, Firebase Hosting (Basic)</p>
+                    </div>
+                    <div class="skill-category">
+                        <h3><i class="fas fa-users"></i> Soft Skills</h3>
+                        <p>Effective Communication, Team Collaboration, Time Management, Adaptability, Critical Thinking</p>
+                    </div>
+                </div>
+                <h3>Professional Interests</h3>
+                <p>Machine Learning Research, Game Design, UI/UX, Cloud Architecture Design, Open Source Contributions.</p>
+                <h3>Availability</h3>
+                <p>Immediate availability for internships, co-op programs, and entry-level positions.</p>
+            </div>
+        </section>
+
+        <section id="experience" class="section">
+            <div class="container">
+                <h2>Experience</h2>
+                <div class="experience-item">
+                    <h3>Cloud Solutions Developer</h3>
+                    <ul>
+                        <li>Deployed Indian Food Cloud Agent on Google Cloud Platform, processing 1,000+ queries with 88% precision.</li>
+                    </ul>
+                </div>
+                <div class="experience-item">
+                    <h3>Web Development Intern</h3>
+                    <ul>
+                        <li>Developed multiple dynamic websites using HTML, CSS, and JavaScript.</li>
+                        <li>Integrated RESTful APIs.</li>
+                    </ul>
+                </div>
+                <div class="experience-item">
+                    <h3>Peer Coding Collaborator</h3>
+                    <ul>
+                        <li>Assisted peers with programming challenges and conducted code reviews.</li>
+                    </ul>
+                </div>
+                <div class="experience-item">
+                    <h3>Electronics Project Contributor</h3>
+                    <ul>
+                        <li>Contributed to the construction of sensor-automated systems.</li>
+                    </ul>
+                </div>
+                <div class="experience-item">
+                    <h3>Open Source Contributor - GitHub</h3>
+                    <ul>
+                        <li>Contributed to various repositories, focusing on bug fixes and UI improvements.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section bg-light">
+            <div class="container">
+                <h2>Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <h3>IoT Distance Measurement System</h3>
+                        <p>Achieved 95% object detection accuracy using ultrasonic sensors and Arduino. Used in 2 lab demos with 40+ student feedback responses.</p>
+                        <a href="#" class="btn">View Details</a>
+                    </div>
+                    <div class="project-card">
+                        <h3>Unreal Engine Game Demo</h3>
+                        <p>Built immersive puzzle game with 3D models and collision mechanics. 90% user engagement.</p>
+                        <a href="#" class="btn">View Details</a>
+                    </div>
+                    <div class="project-card">
+                        <h3>Student Tracker Dashboard</h3>
+                        <p>Visualized performance metrics for 10+ students. Reduced grading report creation time by 40%.</p>
+                        <a href="#" class="btn">View Details</a>
+                    </div>
+                     <div class="project-card">
+                        <h3>To-Do App with Persistence</h3>
+                        <p>Used by 20+ students. Led to 30% improvement in task tracking for academic assignments.</p>
+                        <a href="#" class="btn">View Details</a>
+                    </div>
+                    <div class="project-card">
+                        <h3>Portfolio Website</h3>
+                        <p>Attracted 200+ visitors in 2 weeks. Included mobile-first animations and SEO optimization.</p>
+                        <a href="#" class="btn">View Details</a>
+                    </div>
+                    <div class="project-card">
+                        <h3>Weather Forecast Dashboard</h3>
+                        <p>Delivered accurate weather info using OpenWeather API. Handled 100+ queries/month with error handling.</p>
+                        <a href="#" class="btn">View Details</a>
+                    </div>
+                    <div class="project-card">
+                        <h3>Quiz App with Timer</h3>
+                        <p>Used in college fest by 100+ participants. Maintained 98% uptime; enabled leaderboard ranking.</p>
+                        <a href="#" class="btn">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="certifications" class="section">
+            <div class="container">
+                <h2>Certifications</h2>
+                <ul class="cert-list">
+                    <li>Python Essentials – Cisco Networking Academy</li>
+                    <li>Introduction to Cybersecurity – Cisco Networking Academy</li>
+                    <li>Python Programming – Infosys Springboard</li>
+                    <li>CCNA: Introduction to Networks – Cisco Networking Academy</li>
+                    <li>Introduction to IoT – Cisco Networking Academy</li>
+                    <li>Git & GitHub for Beginners – Udemy</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="education" class="section bg-light">
+            <div class="container">
+                <h2>Education</h2>
+                <div class="education-item">
+                    <h3>B.Tech in Computer Science and Engineering (AI & ML)</h3>
+                    <p>Garden City University, Bengaluru</p>
+                    <p>Expected Graduation: 2026</p>
+                    <p>CGPA: 8.6 (Average over 6 semesters)</p>
+                </div>
+                <div class="education-item">
+                    <h3>2nd PUC-PCMB (Physics, Chemistry, Mathematics, Biology)</h3>
+                    <p>Completed in 2022 with 74.6%</p>
+                </div>
+                <div class="education-item">
+                    <h3>SSLC (10th Grade)</h3>
+                    <p>Completed in 2020 with 86.4%</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact">
+        <div class="container">
+            <p>&copy; 2025 Sanjay B. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="https://linkedin.com/in/sanjay-b-444785255?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/your-github-profile" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="mailto:sanjay2pu@gmail.com"><i class="fas fa-envelope"></i></a>
+                <a href="tel:9743944401"><i class="fas fa-phone"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script >// Import Three.js components
+import * as THREE from 'https://unpkg.com/three@0.165.0/build/three.module.js';
+import { OrbitControls } from 'https://unpkg.com/three@0.165.0/examples/jsm/controls/OrbitControls.js';
+// We are not including GLTFLoader or FontLoader/TextGeometry in this basic demo,
+// as they require 3D models and font files which cannot be provided directly.
+
+document.addEventListener('DOMContentLoaded', () => {
+    // --- Smooth Scrolling for Navigation ---
+    document.querySelectorAll('nav ul li a').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            const headerOffset = document.querySelector('header').offsetHeight; // Get header height
+            const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+            const offsetPosition = elementPosition - headerOffset - 20; // Add some padding
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+
+            // Update active link class
+            document.querySelectorAll('nav ul li a').forEach(item => item.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    // --- Active Nav Link on Scroll ---
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('nav ul li a');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        const headerOffset = document.querySelector('header').offsetHeight;
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - headerOffset - 30; // Adjust offset
+            const sectionHeight = section.clientHeight;
+            if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').includes(current)) {
+                link.classList.add('active');
+            }
+        });
+    });
+
+
+    // --- Three.js for Home/Introduction Section ---
+    const threeContainer = document.getElementById('three-container');
+    if (threeContainer) {
+        // Scene setup
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(getComputedStyle(document.body).getPropertyValue('--bg-light').trim()); // Use CSS variable for background
+
+        // Camera
+        const camera = new THREE.PerspectiveCamera(75, threeContainer.clientWidth / threeContainer.clientHeight, 0.1, 1000);
+        camera.position.set(0, 0, 5); // Initial camera position
+
+        // Renderer
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(threeContainer.clientWidth, threeContainer.clientHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        threeContainer.appendChild(renderer.domElement);
+
+        // Responsive rendering
+        window.addEventListener('resize', () => {
+            camera.aspect = threeContainer.clientWidth / threeContainer.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(threeContainer.clientWidth, threeContainer.clientHeight);
+        });
+
+        // Lights (bright, diffused lighting)
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.7); // Soft white light
+        scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6); // Direct light from a direction
+        directionalLight.position.set(5, 5, 5).normalize();
+        scene.add(directionalLight);
+
+        // --- Abstract AI Brain / Neural Network (Placeholder) ---
+        // Let's create a simple dodecahedron as a placeholder for the "AI brain"
+        // and add some glowing particles around it.
+
+        // Dodecahedron (main "brain" shape)
+        const geometry = new THREE.DodecahedronGeometry(1.5, 0); // Size 1.5, no subdivisions
+        const material = new THREE.MeshPhongMaterial({
+            color: 0x8A2BE2, // Blue Violet - playful color
+            specular: 0x050505,
+            shininess: 100,
+            flatShading: true, // For a "toy-like" faceted look
+        });
+        const aiBrain = new THREE.Mesh(geometry, material);
+        scene.add(aiBrain);
+
+        // Glowing Particles/Nodes (simple spheres for now)
+        const particleGeometry = new THREE.SphereGeometry(0.1, 16, 16);
+        const particleMaterial = new THREE.MeshBasicMaterial({ color: 0x00FFFF }); // Cyan glow
+
+        const particles = [];
+        for (let i = 0; i < 50; i++) {
+            const particle = new THREE.Mesh(particleGeometry, particleMaterial);
+            // Random positions around the brain
+            particle.position.set(
+                (Math.random() - 0.5) * 8,
+                (Math.random() - 0.5) * 8,
+                (Math.random() - 0.5) * 8
+            );
+            // Ensure they are somewhat near the brain for connection effect
+            const distance = Math.sqrt(
+                particle.position.x**2 + particle.position.y**2 + particle.position.z**2
+            );
+            if (distance > 3) { // Bring closer if too far
+                particle.position.setLength(3 * Math.random() + 1.5);
+            }
+
+            scene.add(particle);
+            particles.push(particle);
+        }
+
+        // Connecting Lines (simple lines between random particles)
+        const lineMaterial = new THREE.LineBasicMaterial({ color: 0x00FFFF, transparent: true, opacity: 0.5 });
+        const lineCount = 30;
+        const lines = [];
+        for (let i = 0; i < lineCount; i++) {
+            const p1 = particles[Math.floor(Math.random() * particles.length)].position;
+            const p2 = particles[Math.floor(Math.random() * particles.length)].position;
+            const points = [];
+            points.push(p1, p2);
+            const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
+            const line = new THREE.Line(lineGeometry, lineMaterial);
+            scene.add(line);
+            lines.push(line);
+        }
+
+        // OrbitControls for user interaction
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true; // Smooth camera movement
+        controls.dampingFactor = 0.05;
+        controls.minDistance = 3;
+        controls.maxDistance = 10;
+        controls.enablePan = false; // Disable panning for subtle rotation
+        controls.maxPolarAngle = Math.PI / 2; // Prevent camera from going below ground
+
+        // Animation Loop
+        const animate = () => {
+            requestAnimationFrame(animate);
+
+            // Gentle "bouncing" or "wobbling" for the AI brain
+            aiBrain.rotation.x += 0.001;
+            aiBrain.rotation.y += 0.002;
+            aiBrain.position.y = Math.sin(performance.now() * 0.001) * 0.1; // Gentle bobbing
+
+            // Particles subtle movement and glow
+            particles.forEach(p => {
+                p.rotation.x += 0.01;
+                p.rotation.y += 0.01;
+                // Subtle random drift
+                p.position.x += (Math.random() - 0.5) * 0.005;
+                p.position.y += (Math.random() - 0.5) * 0.005;
+                p.position.z += (Math.random() - 0.5) * 0.005;
+
+                // Keep particles somewhat contained
+                if (p.position.length() > 5) {
+                    p.position.setLength(5);
+                }
+            });
+
+            // Update OrbitControls
+            controls.update();
+
+            renderer.render(scene, camera);
+        };
+        animate();
+    }
+
+    // --- CTA Button Actions (for placeholder buttons) ---
+    const exploreWorkBtn = document.getElementById('exploreWorkBtn');
+    const contactMeBtn = document.getElementById('contactMeBtn');
+
+    if (exploreWorkBtn) {
+        exploreWorkBtn.addEventListener('click', () => {
+            document.querySelector('#projects').scrollIntoView({ behavior: 'smooth' });
+        });
+    }
+
+    if (contactMeBtn) {
+        contactMeBtn.addEventListener('click', () => {
+            document.querySelector('footer').scrollIntoView({ behavior: 'smooth' });
+        });
+    }
+
+    // --- Basic Scroll Reveal (requires CSS from style.css) ---
+    const allSections = document.querySelectorAll('.section:not(#home)'); // Exclude home for this effect
+    const observerOptions = {
+        root: null,
+        threshold: 0.1 // Trigger when 10% of the section is visible
+    };
+
+    const sectionObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            } else {
+                // Optional: remove visible class if you want animation to repeat on scroll out/in
+                // entry.target.classList.remove('visible');
+            }
+        });
+    }, observerOptions);
+
+    allSections.forEach(section => {
+        section.classList.add('hidden'); // Add hidden class initially
+        sectionObserver.observe(section);
+    });
+
+});</script>
+</body>
+</html>
